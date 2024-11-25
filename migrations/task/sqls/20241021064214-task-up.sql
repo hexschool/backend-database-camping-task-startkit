@@ -105,22 +105,34 @@ VALUES
     -- 2. 教練`肌肉棒子` 需要有 `瑜珈` 專長
     -- 3. 教練`Q太郎` 需要有 `有氧運動` 與 `復健訓練` 專長
 -- 所有教練都有 `重訓` 專長
+-- 確保 SKILL 資料表中有 `重訓`
+SELECT id FROM "SKILL" WHERE name = '重訓';
+-- 如果沒有記錄，新增專長
+INSERT INTO "SKILL" (name) VALUES ('重訓');
+
+-- 為三名教練新增 `重訓` 專長
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id)
 SELECT 
-    c.id AS coach_id, 
+    c.id AS coach_id,
     s.id AS skill_id
 FROM 
-    "COACH" c,
-    "SKILL" s
+    "COACH" c
+CROSS JOIN 
+    (SELECT id FROM "SKILL" WHERE name = '重訓') s
 WHERE 
-    s.name = '重訓'
-  AND c.user_id IN (
-      (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io'),
-      (SELECT id FROM "USER" WHERE email = 'muscle@hexschooltest.io'),
-      (SELECT id FROM "USER" WHERE email = 'starplatinum@hexschooltest.io')
-  );
+    c.user_id IN (
+        (SELECT id FROM "USER" WHERE email = 'lee2000@hexschooltest.io'),
+        (SELECT id FROM "USER" WHERE email = 'muscle@hexschooltest.io'),
+        (SELECT id FROM "USER" WHERE email = 'starplatinum@hexschooltest.io')
+    );
 
 -- 教練 `肌肉棒子` 的 `瑜珈` 專長
+-- 確保 SKILL 資料表中有 `瑜珈`
+SELECT id FROM "SKILL" WHERE name = '瑜珈';
+-- 如果沒有記錄，新增專長
+INSERT INTO "SKILL" (name) VALUES ('瑜珈');
+
+-- 新增 `瑜珈` 專長
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id)
 VALUES (
     (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE email = 'muscle@hexschooltest.io')),
@@ -128,6 +140,12 @@ VALUES (
 );
 
 -- 教練 `Q太郎` 的 `有氧運動` 與 `復健訓練` 專長
+-- 確保 SKILL 資料表中有 `有氧運動` 與 `復健訓練`
+SELECT id FROM "SKILL" WHERE name IN ('有氧運動', '復健訓練');
+-- 如果沒有記錄，新增專長
+INSERT INTO "SKILL" (name) VALUES ('有氧運動'), ('復健訓練');
+
+-- 新增專長
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id)
 VALUES 
 (
