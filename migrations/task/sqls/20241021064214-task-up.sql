@@ -412,5 +412,6 @@ SELECT
 FROM
   "COURSE_BOOKING" cb
 WHERE
-  DATE_TRUNC('month', cb.created_at) = '2024-11-01'
+  DATE_PART('month', cb.created_at) = 11
+  AND DATE_PART('year', cb.created_at) = 2024
   AND cb.status IN ('即將授課', '上課中', '課程已完成');
