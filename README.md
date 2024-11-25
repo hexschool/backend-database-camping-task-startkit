@@ -1,3 +1,5 @@
+[![Check](https://github.com/happyloa/Hex2024-backend-database-camp/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/happyloa/Hex2024-backend-database-camp/actions/workflows/check.yml)
+
 # db-migrate-startkit
 
 ## 事前準備
