@@ -43,7 +43,7 @@ FROM
 INNER JOIN 
   "CREDIT_PACKAGE" cp ON cpr.credit_package_id = cp.id
 WHERE 
-  DATE_PART('month', cpr.purchase_at) = 11
+  DATE_PART('month', cpr.purchase_at) = 12
 GROUP BY 
   cp.name;
 
@@ -56,7 +56,7 @@ FROM
 INNER JOIN 
   "CREDIT_PACKAGE" cp ON cpr.credit_package_id = cp.id
 WHERE 
-  DATE_PART('month', cpr.purchase_at) = 11;
+  DATE_PART('month', cpr.purchase_at) = 12;
 
 
 -- 5. 計算 11 月份有預約課程的會員人數
@@ -65,5 +65,5 @@ SELECT
 FROM 
   "COURSE_BOOKING" cb
 WHERE 
-  DATE_PART('month', cb.created_at) = 11
+  DATE_PART('month', cb.created_at) = 12
   AND cb.status IN ('即將授課', '上課中', '已完成');
