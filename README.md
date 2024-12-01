@@ -25,13 +25,13 @@
 
 打開終端機並輸入以下指令
 ```
-$ npm i
+$ pnpm i
 ```
 
 ### 新增一組遷移
 在終端機輸入以下指令來新增一組遷移，your_file_name請替換成任何你要的檔案名稱，檔案名稱之間不可有空白
 ```
-$ npm run create your_file_name
+$ pnpm run create your_file_name
 ```
 執行後程式將自動產生一組遷移在migrations資料夾下，一組遷移將包含3個檔案，檔案皆以日期時間加上剛剛輸入的文字命名：
 
@@ -57,7 +57,7 @@ $ npm run create your_file_name
 
 打開終端機並輸入以下指令，程式將自動啟動資料庫，並運行遷移
 ```
-$ npm run start
+$ pnpm run start
 ```
 
 啟動後，請檢查Docker Desktop程式界面中裡是否新增db-migrate-startkit的容器堆疊，該堆疊裡了有兩個容器：
@@ -70,14 +70,14 @@ $ npm run start
 
 ### 重新啟動資料庫
 ```
-$ npm run restart
+$ pnpm run restart
 ```
 ### 關閉資料庫
 ```
-$ npm run stop
+$ pnpm run stop
 ```
 
 ### 關閉資料庫並清除資料
 ```
-$ npm run clean
+$ pnpm run clean
 ```
