@@ -19,6 +19,11 @@
 
 ## 開始使用
 
+1. copy .env.example to .env
+2. pnpm install
+3. pnpm run start
+4. pnpm run migrate
+
 ### 安裝套件
 
 >執行前請確保已經安裝了Node.js
