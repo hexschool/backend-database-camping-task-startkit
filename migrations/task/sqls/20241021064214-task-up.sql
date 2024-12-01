@@ -58,11 +58,38 @@ SELECT * FROM "USER" LIMIT 3;
     -- 2. 名稱為`14 堂組合包方案`，價格為`2,520` 元，堂數為`14`
     -- 3. 名稱為 `21 堂組合包方案`，價格為`4,800` 元，堂數為`21`
 
+INSERT INTO "CREDIT_PACKAGE" (name, price, credit_amount)
+VALUES
+    ('7 堂組合包方案', 1400, 7),
+    ('14 堂組合包方案', 2520, 14),
+    ('21 堂組合包方案', 4800, 21);
+
 -- 2-2. 新增：在 `CREDIT_PURCHASE` 資料表，新增三筆資料：（請使用 name 欄位做子查詢）
     -- 1. `王小明` 購買 `14 堂組合包方案`
     -- 2. `王小明` 購買 `21 堂組合包方案`
     -- 3. `好野人` 購買 `14 堂組合包方案`
 
+參考來源: [組合包方案 CREDIT_PACKAGE、客戶購買課程堂數 CREDIT_PURCHASE](https://github.com/happyloa/Hex2024-backend-database-camp/blob/main/migrations/task/sqls/20241021064214-task-up.sql)
+INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, price_paid)
+VALUES
+(
+    (SELECT id FROM "USER" WHERE name = '王小明'), -- 從 USER 資料表中查找名稱為 "王小明" 的用戶 ID
+    (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'), -- 從 CREDIT_PACKAGE 資料表中查找名稱為 "14 堂組合包方案" 的套餐 ID
+    14, -- 購買的堂數為 14
+    2520 -- 支付金額為 2,520 元
+),
+(
+    (SELECT id FROM "USER" WHERE name = '王小明'), -- 查找名稱為 "王小明" 的用戶 ID
+    (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案'), -- 查找名稱為 "21 堂組合包方案" 的套餐 ID
+    21, -- 購買的堂數為 21
+    4800 -- 支付金額為 4,800 元
+),
+(
+    (SELECT id FROM "USER" WHERE name = '好野人'), -- 查找名稱為 "好野人" 的用戶 ID
+    (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'), -- 查找名稱為 "14 堂組合包方案" 的套餐 ID
+    14, -- 購買的堂數為 14
+    2520 -- 支付金額為 2,520 元
+);
 
 -- ████████  █████   █    ████   
 --   █ █   ██    █  █         ██ 
