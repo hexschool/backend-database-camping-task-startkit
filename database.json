@@ -4,9 +4,9 @@
   "pg": {
     "host": {"ENV": "DB_HOST"},
     "port": 5432,
-    "user": {"ENV": "DB_USERNAME"},
-    "password" : {"ENV": "DB_PASSWORD"},
-    "database": {"ENV": "DB_DATABASE"},
+    "user": {"ENV": "POSTGRES_USER"},
+    "password" : {"ENV": "POSTGRES_PASSWORD"},
+    "database": {"ENV": "POSTGRES_DB"},
     "driver": "pg",
     "multipleStatements": true
   }
