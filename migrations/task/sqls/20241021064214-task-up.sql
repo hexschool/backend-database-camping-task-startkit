@@ -434,3 +434,4 @@ FROM
 WHERE 
   DATE_PART('month', cb.created_at) = 12
   AND cb.status IN ('即將授課', '上課中', '已完成');
+  
