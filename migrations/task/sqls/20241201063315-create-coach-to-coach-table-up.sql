@@ -12,4 +12,5 @@ VALUES
 (
   (SELECT id FROM "USER" WHERE name = 'Q太郎'),
   2
-);
+)
+ON CONFLICT (user_id) DO NOTHING;

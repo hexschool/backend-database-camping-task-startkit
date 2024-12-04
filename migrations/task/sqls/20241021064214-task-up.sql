@@ -69,23 +69,26 @@ VALUES
 INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, price_paid)
 VALUES
 (
-  (SELECT id FROM "USER" WHERE name = '王小明'),
-  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
-  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
-  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案')
+  (SELECT id FROM "USER" WHERE name = '王小明' LIMIT 1),
+  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1),
+  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1),
+  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1)
 ),
 (
-  (SELECT id FROM "USER" WHERE name = '王小明'),
-  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案'),
-  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案'),
-  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案')
+  (SELECT id FROM "USER" WHERE name = '王小明' LIMIT 1),
+  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案' LIMIT 1),
+  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案' LIMIT 1),
+  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案' LIMIT 1)
 ),
 (
-  (SELECT id FROM "USER" WHERE name = '好野人'),
-  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
-  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
-  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案')
+  (SELECT id FROM "USER" WHERE name = '好野人' LIMIT 1),
+  (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1),
+  (SELECT credit_amount FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1),
+  (SELECT price FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案' LIMIT 1)
 );
+
+
+
 
 
 -- ████████  █████   █    ████   
@@ -112,7 +115,8 @@ VALUES
 (
   (SELECT id FROM "USER" WHERE name = 'Q太郎'),
   2
-);
+)
+ON CONFLICT (user_id) DO NOTHING;
 
 -- 3-2. 新增：承1，為三名教練新增專長資料至 `COACH_LINK_SKILL` ，資料需求如下：
     -- 1. 所有教練都有 `重訓` 專長
@@ -124,10 +128,12 @@ VALUES
 ('瑜伽'),
 ('有氧運動'),
 ('復健訓練')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT (name) DO NOTHING; -- 避免重複插入已存在的技能
 
+-- Step 2: 新增教練專長到 COACH_LINK_SKILL 資料表
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id)
 VALUES
+-- 所有教練都有重訓專長
 (
   (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容')),
   (SELECT id FROM "SKILL" WHERE name = '重訓')
@@ -140,10 +146,12 @@ VALUES
   (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = 'Q太郎')),
  (SELECT id FROM "SKILL" WHERE name = '重訓')
  ),
+-- 肌肉棒子的瑜伽專長
 (
   (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '肌肉棒子')),
  (SELECT id FROM "SKILL" WHERE name = '瑜伽')
  ),
+-- Q太郎的專長（有氧運動和復健訓練）
 (
   (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = 'Q太郎')),
  (SELECT id FROM "SKILL" WHERE name = '有氧運動')
@@ -151,7 +159,8 @@ VALUES
 (
   (SELECT id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = 'Q太郎')),
  (SELECT id FROM "SKILL" WHERE name = '復健訓練')
- );
+ )
+ON CONFLICT DO NOTHING;
 
 -- 3-3 修改：更新教練的經驗年數，資料需求如下：
     -- 1. 教練`肌肉棒子` 的經驗年數為3年
@@ -221,14 +230,14 @@ INSERT INTO "COURSE_BOOKING" (course_id, user_id, booking_at, status)
 VALUES
 (
   -- 第一筆：王小明預約課程
-  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容'))),
+  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容')) AND start_at = '2024-11-25 14:00:00' LIMIT 1),
   (SELECT id FROM "USER" WHERE name = '王小明'),
   '2024-11-24 16:00:00',
   '即將授課'
 ),
 (
   -- 第二筆：好野人預約課程
-  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容'))),
+  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容')) AND start_at = '2024-11-25 14:00:00' LIMIT 1),
   (SELECT id FROM "USER" WHERE name = '好野人'),
   '2024-11-24 16:00:00',
   '即將授課'
@@ -253,7 +262,7 @@ WHERE
 INSERT INTO "COURSE_BOOKING" (user_id, course_id, booking_at, status)
 VALUES (
   (SELECT id FROM "USER" WHERE name = '王小明'),
-  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容'))),
+  (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容')) LIMIT 1),
   '2024-11-24 17:10:25',
   '即將授課'
 );
@@ -285,9 +294,14 @@ SET
   status = '上課中'
 WHERE 
   user_id = (SELECT id FROM "USER" WHERE name = '王小明')
-  AND course_id = (SELECT id FROM "COURSE" WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容')))
+  AND course_id = (
+    SELECT id 
+    FROM "COURSE" 
+    WHERE user_id = (SELECT user_id FROM "COACH" WHERE user_id = (SELECT id FROM "USER" WHERE name = '李燕容'))
+    LIMIT 1
+  )
   AND status != '課程已取消'
-  AND join_at IS NULL; -- 確保只更新尚未加入直播室的記錄
+  AND join_at IS NULL;
 
 -- 5-6. 查詢：計算用戶王小明的購買堂數，顯示須包含以下欄位： user_id , total。 (需使用到 SUM 函式與 Group By)
 SELECT 
