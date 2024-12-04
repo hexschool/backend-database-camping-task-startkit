@@ -7,9 +7,9 @@ jobs:
     name: Run Migrate Test
     runs-on: ubuntu-latest
     env:
-      DB_USERNAME: root
-      DB_DATABASE: test
-      DB_PASSWORD: test
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_HOST: localhost
     services:
       postgres:
@@ -45,8 +45,12 @@ jobs:
       with:
         path: ./node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-    - name: test migrate
-      run: npm run init && npm run migrate
+    - name: Load .env file and run migrate
+      run: |
+          if [ -f .env ]; then
+            export $(cat .env | xargs)
+          fi
+          npm run init && npm run migrate
         
         
         
