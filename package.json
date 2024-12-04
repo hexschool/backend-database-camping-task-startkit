@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "db-migrate up --config database.json -e pg -m ./migrations/init",
-    "migrate": "db-migrate up --config database.json -e pg -m ./migrations/task",
-    "create": "db-migrate create --config database.json -e pg -m ./migrations/task",
-    "start": "docker compose up -d --build",
-    "restart": "docker compose up --force-recreate --build -d",
-    "stop": "docker compose stop",
-    "clean": "docker compose down -v"
+    "init": "db-migrate up --env-file .env --config database.json -e pg -m ./migrations/init",
+    "migrate": "db-migrate up --env-file .env --config database.json -e pg -m ./migrations/task",
+    "create": "db-migrate create --env-file .env --config database.json -e pg -m ./migrations/task",
+    "start": "docker compose --env-file .env up -d --build",
+    "restart": "docker compose --env-file .env up --force-recreate --build -d",
+    "stop": "docker compose --env-file .env stop",
+    "clean": "docker compose --env-file .env down -v"
   },
   "dependencies": {
     "db-migrate": "^0.11.14",
