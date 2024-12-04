@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "db-migrate up --env-file .env --config database.json -e pg -m ./migrations/init",
-    "migrate": "db-migrate up --env-file .env --config database.json -e pg -m ./migrations/task",
-    "create": "db-migrate create --env-file .env --config database.json -e pg -m ./migrations/task",
+    "init": "db-migrate up --config database.json -e pg -m ./migrations/init",
+    "migrate": "db-migrate up --config database.json -e pg -m ./migrations/task",
+    "create": "db-migrate create --config database.json -e pg -m ./migrations/task",
     "start": "docker compose --env-file .env up -d --build",
     "restart": "docker compose --env-file .env up --force-recreate --build -d",
     "stop": "docker compose --env-file .env stop",

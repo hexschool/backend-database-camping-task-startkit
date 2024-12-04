@@ -45,12 +45,8 @@ jobs:
       with:
         path: ./node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-    - name: Load .env file and run migrate
-      run: |
-          if [ -f .env ]; then
-            export $(cat .env | xargs)
-          fi
-          npm run init && npm run migrate
+    - name: test migrate
+      run: npm run init && npm run migrate
         
         
         
