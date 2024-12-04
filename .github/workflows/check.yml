@@ -7,9 +7,9 @@ jobs:
     name: Run Migrate Test
     runs-on: ubuntu-latest
     env:
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_DATABASE: ${{ secrets.DB_DATABASE }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USERNAME: root
+      DB_DATABASE: test
+      DB_PASSWORD: test
       DB_HOST: localhost
     services:
       postgres:
