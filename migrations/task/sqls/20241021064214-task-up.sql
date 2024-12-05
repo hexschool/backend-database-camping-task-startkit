@@ -15,7 +15,7 @@
 --     5. 用戶名稱為`Q太郎`，Email 為`starplatinum@hexschooltest.io`，Role為`USER`
 --     6. 用戶名稱為 透明人，Email 為 opacity0@hexschooltest.io，Role 為 USER
 
-INSERT INTO USER(name, email, role)
+INSERT INTO "USER"(name, email, role)
 VALUES
     ('李燕容', 'lee2000@hexschooltest.io', 'USER'),
     ('王小明', 'wXlTq@hexschooltest.io', 'USER'),
