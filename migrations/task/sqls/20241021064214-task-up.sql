@@ -300,4 +300,4 @@ WHERE purchase_at >= '2024-11-01' and purchase_at < '2024-12-01';
 
 SELECT COUNT(DISTINCT user_id) AS 預約會員人數
 FROM "COURSE_BOOKING"
-WHERE created_at >= '2024-12-01' AND created_at < '2025-01-01' AND status != '課程已取消';
+WHERE created_at >= '2024-11-01' AND created_at < '2024-12-01' AND status != '課程已取消';
